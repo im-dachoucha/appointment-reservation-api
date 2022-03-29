@@ -6,6 +6,8 @@ class HomeController extends Controller{
     }
 
     public function index(){
-        $this->view("home/index");
+        echo json_encode([
+            'message' => 'You should not messing around with this API'
+        ]);
     }
 }
