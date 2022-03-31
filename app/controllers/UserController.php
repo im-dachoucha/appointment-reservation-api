@@ -17,22 +17,26 @@ class UserController extends Controller{
     }
 
 
-    public function index(){
+    public function index($uuid = null){
         $data = [];
         $code = 200;
         if($_SERVER["REQUEST_METHOD"] === "GET"){
-            $request_body = file_get_contents("php://input");
-            extract(json_decode($request_body, true));
-            $users = $this->model->get_user($uuid);
-            if(count($users) > 0){
-                $code = 200;
-                $data["data"] = $users[0];
-                $data["message"] = "success";
-            }
-            else{
-                $code = 404;
-                $data["message"] = "User not found";
-                $data["data"] = [];
+            if($uuid === null){
+                $code = 405;
+                $data["message"] = "uuid shoud be provided as a parameter";
+            }else{
+
+                $users = $this->model->get_user($uuid);
+                if(count($users) > 0){
+                    $code = 200;
+                    $data["data"] = $users[0];
+                    $data["message"] = "success";
+                }
+                else{
+                    $code = 404;
+                    $data["message"] = "User not found";
+                    $data["data"] = [];
+                }
             }
         }
         else{
