@@ -42,4 +42,26 @@ class AppointmentController extends Controller
         }
         response($data, "GET", $code);
     }
+
+    public function delete(){
+        $data = ["message" => "", "data" => []];
+        $code = 200;
+        if($_SERVER["REQUEST_METHOD"] === "DELETE"){
+            $request_body = file_get_contents("php://input");
+            extract(json_decode($request_body, true));
+            if(!isset($appid)){
+                $code = 405;
+                $data["message"] = "not appointment id provided";
+            }else{
+                $this->model->delete_appointment($appid);
+                $data["message"] = "success";
+            }
+        }
+        else{
+            $code = 405;
+            $data["message"] = "Method not allowed";
+        }
+        response($data, "DELETE", $code);
+    }
+
 }
