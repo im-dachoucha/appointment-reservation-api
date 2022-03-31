@@ -23,9 +23,8 @@ class UserController extends Controller{
         if($_SERVER["REQUEST_METHOD"] === "GET"){
             if($uuid === null){
                 $code = 405;
-                $data["message"] = "uuid shoud be provided as a parameter";
+                $data["message"] = "uuid should be provided as a parameter";
             }else{
-
                 $users = $this->model->get_user($uuid);
                 if(count($users) > 0){
                     $code = 200;
