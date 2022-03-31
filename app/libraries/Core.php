@@ -24,8 +24,6 @@ class Core{
 
         $this->params = $url ? array_values($url) : [];
         
-        header("Access-Control-Allow-Origin: *");
-        header("Content-Type: application/json; charset=UTF-8");
         call_user_func_array([$this->controller, $this->action], $this->params);
         
     }
