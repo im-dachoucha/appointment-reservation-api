@@ -5,6 +5,26 @@ class AppointmentController extends Controller
         $this->model = $this->model("Appointment");
     }
 
+    public function index(){
+        $data = [];
+        $code = 200;
+        if($_SERVER["REQUEST_METHOD"] === "POST"){
+            $request_body = file_get_contents("php://input");
+            extract(json_decode($request_body, true));
+            $data["data"] = array_values($this->model->get_appointments($date));
+            foreach($data["data"] as $key => $value){
+                $data["data"][$key] = $value["timeslot"];
+            }
+            $data["message"] = "success";
+        }
+        else{
+            $code = 405;
+            $data["message"] = "Method not allowed";
+            $data["data"] = [];
+        }
+        response($data, "POST", $code);
+    }
+
     public function reserve(){
         $data = [];
         $code = 200;

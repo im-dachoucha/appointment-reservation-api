@@ -34,14 +34,14 @@ class UserController extends Controller{
                 else{
                     $code = 404;
                     $data["message"] = "User not found";
-                    $data["data"] = [];
+                    $data["data"] = null;
                 }
             }
         }
         else{
             $code = 405;
             $data["message"] = "Method not allowed";
-            $data["data"] = [];
+            $data["data"] = null;
         }
         response($data, "GET", $code);
     }

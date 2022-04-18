@@ -6,6 +6,10 @@ class Appointment extends Model
         parent::__construct("appointment", "appid");
     }
 
+    public function get_appointments($date){
+        return $this->execute("SELECT `timeslot` FROM appointment WHERE appdate = ?", [$date]);
+    }
+
     public function reserve_appointment($values){
         $this->execute("INSERT INTO `{$this->table}` (`uuid`, `appdate`, `timeslot`) VALUES (?, ?, ?)", $values);
     }
